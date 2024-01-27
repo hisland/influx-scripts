@@ -1,13 +1,24 @@
 #!/bin/bash
 
+influx \
+  config \
+  create \
+  --config-name config1 \
+  --active \
+  --host-url http://dd.llmcxt.com:9025 \
+  --org org1 \
+  --token _bd_9ZNaF7pPPgLFVUaYXfnBAmxjGmnotjqdYXZ2cpskNJfgyWRV3LQUipLOk7ZcuW2-P-m2ak1ehlvXtaovpQ==
 
-cat <<EOF > dd.sh
-#!/bin/bash
+influx remote create \
+  --json \
+  --name remote1 \
+  --remote-url http://dd.llmcxt.com:9025 \
+  --remote-api-token _bd_9ZNaF7pPPgLFVUaYXfnBAmxjGmnotjqdYXZ2cpskNJfgyWRV3LQUipLOk7ZcuW2-P-m2ak1ehlvXtaovpQ== \
+  --remote-org-id 1f6f1f031273fcaa
 
-REMOTE_URL="http://192.168.1.222:9023"
-REMOTE_TOKEN="dergxW1hvsEfqFo2S7dog_ZhhXr5XkYopmYQm_Xuc6KzfHRgr0sNvzLkmTTtn8rz7ggY87vWhtPmk08sYHYK6A=="
-REMOTE_ORG_ID="ce9690fafdee5814"
-REMOTE_BUCKET_NAME=industry_security_t_beta
-EOF
-
-
+influx replication create \
+  --json \
+  --name replication1 \
+  --remote-id 0c7d2f3ca89db000 \
+  --local-bucket-id 9c339a51ba7a9ef7 \
+  --remote-bucket bk3
